@@ -132,7 +132,7 @@ input, select, textarea {
 	p {
 		margin: 0 0 0 0;
 		text-align: left;
-		text-justify: distribute;
+		text-justify: auto;
 		
         
 	}
