@@ -3320,3 +3320,15 @@ input, select, textarea {
 
 	}
 
+/**
+* Removes Spacers for Screens 765px and Smaller
+************************************************/
+@media screen and ( max-width: 765px ) {
+
+    .sm-page-widget-21568057,
+    .sm-page-widget-21568058,
+    .sm-page-widget-21568059 {
+        height: 0px;
+        }
+
+}
