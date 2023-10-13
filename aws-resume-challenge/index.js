@@ -1,18 +1,8 @@
-var counterContainer = document.querySelector(".website-counter");
-
-// Function to fetch the visitor count from the Lambda URL
-function fetchVisitorCount() {
-  fetch("https://tacmarpubmxzo2zv7pizxowojq0ksiyb.lambda-url.us-east-1.on.aws/")
-    .then(function(response) {
-      return response.text();
-    })
-    .then(function(data) {
-      counterContainer.innerHTML = data;
-    })
-    .catch(function(error) {
-      console.error("Error fetching visitor count: " + error);
-    });
+const counter = document.querySelector(".website-counter");
+async function updateCounter() {
+    let response = await fetch(
+        "https://tacmarpubmxzo2zv7pizxowojq0ksiyb.lambda-url.us-east-1.on.aws/");
+    let data = await response.json();
+    counter.innerHTML = `👀 Views: ${data}`;
 }
-
-// Fetch the visitor count when the page loads
-fetchVisitorCount();
+updateCounter();
