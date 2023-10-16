@@ -3,7 +3,7 @@ name: Backend CI/CD with Tests and S3 Upload
 on:
   push:
     branches:
-      - main
+    - main
 
 jobs:
   deploy:
