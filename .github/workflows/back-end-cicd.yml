@@ -22,7 +22,7 @@ jobs:
 
       - name: Initialize Terraform
         run: terraform init
-        working-directory: IaC  # Change to your IaC directory
+        working-directory: backend_iac  # Change to your IaC directory
 
       - name: Run Python Tests
         run: python -m unittest discover -s tests -p 'test_func1.py'  # Modify as needed
