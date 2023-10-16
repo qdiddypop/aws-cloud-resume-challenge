@@ -29,11 +29,11 @@ jobs:
 
       - name: Plan Terraform Changes
         run: terraform plan -out=tfplan
-        working-directory: IaC  # Change to your IaC directory
+        working-directory: backend_iac  # Change to your IaC directory
 
       - name: Apply Terraform Changes
         run: terraform apply tfplan
-        working-directory: IaC  # Change to your IaC directory
+        working-directory: backend_iac  # Change to your IaC directory
 
       - name: Notify Success
         run: echo "Backend deployment successful"
@@ -47,9 +47,9 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'us-east-1'  # Update with your AWS region
-          SOURCE_DIR: 'IaC'  # Replace with the directory you want to sync
+          SOURCE_DIR: 'backend_iac'  # Replace with the directory you want to sync
 
       - name: Cleanup
-        run: rm IaC/tfplan
+        run: rm backend_iac/tfplan
 
     # Additional options for notification, error handling, and more.
