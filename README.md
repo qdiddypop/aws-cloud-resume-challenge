@@ -1,12 +1,12 @@
 # AWS Cloud Resume Challenge Project
-[Cloud Resume 🔗](https://resume.qhowell.cloud)
+[My Cloud Resume 🔗](https://resume.qhowell.cloud)
 
 ## Blog Series
 [Navigating the AWS Cloud Resume Challenge](https://dev.to/qdiddypop/navigating-the-aws-cloud-resume-challenge-lessons-learned-37l2)
 
 
 ## Overview
-The AWS Cloud Resume Challenge is a multi-step resume project tailored to exhibit and enhance fundamental skills necessary for pursuing a career in cloud computing. This endeavor showcases your competence in constructing a secure static website with a visitor counter, utilizing various AWS services and infrastructure. Successfully accomplishing this challenge equips you with hands-on proficiency in AWS, CloudFront, Lambda, DynamoDB, GitHub Actions, Terraform, and other key technologies.
+[The Cloud Resume Challenge](https://cloudresumechallenge.dev/) is a multi-step resume project tailored to exhibit and enhance fundamental skills necessary for pursuing a career in cloud computing. This endeavor showcases your competence in constructing a secure static website with a visitor counter, utilizing various AWS services and infrastructure. Successfully accomplishing this challenge equips you with hands-on proficiency in AWS, CloudFront, Lambda, DynamoDB, GitHub Actions, Terraform, and other key technologies.
 
 ### Architecture
 
