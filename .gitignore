@@ -1,0 +1,45 @@
+# Ignore log and temporary files
+log/
+logs/
+tmp/
+temp/
+*.log
+*.log.*
+*.tmp
+*.swp
+
+# Ignore IDE and editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+thumbs.db
+
+# Ignore compiled binaries
+/bin/
+/build/
+/out/
+/dist/
+/target/
+/obj/
+
+# Ignore dependencies
+/node_modules/
+/.pnp
+.pnp.js
+
+# Ignore build and output directories
+/build/
+/dist/
+/out/
+/public/
+
+# Ignore package manager files
+npm-debug.log
+yarn-error.log
+yarn-error-1.log
+.pnp.js
