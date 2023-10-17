@@ -38,17 +38,12 @@ jobs:
       - name: Notify Success
         run: echo "Backend deployment successful"
 
-      - name: Synchronize with S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --acl public-read --follow-symlinks --delete
+      - name: Sync with Existing S3 Directory
+        run: aws s3 sync backend_iac/ s3://qhowell-cloud-resume-challenge/backend/
         env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'us-east-1'  # Update with your AWS region
-          SOURCE_DIR: 'backend_iac'  # Update the source directory as needed
-          DEST_DIR: 's3://qhowell-cloud-resume-challenge/backend/'  # Set your desired destination
+          AWS_REGION: 'us-east-1'
 
       - name: Cleanup
         run: rm backend_iac/tfplan
