@@ -1,18 +1,12 @@
-const counter = document.querySelector(".website-counter");
+const counter = document.querySelector(".counter-number");
 
 async function updateCounter() {
-    try {
-        let response = await fetch(
-            "https://tacmarpubmxzo2zv7pizxowojq0ksiyb.lambda-url.us-east-1.on.aws/");
-        let data = await response.json();
+    let response = await fetch(
+        "https://wwjcx7tyxrbjmbkf3vc3teo3mu0qrvhq.lambda-url.ca-central-1.on.aws/"
+    );
+    let data = await response.json();
 
-        // Assuming the response from your Lambda function contains a "count" property
-        if (data && data.count) {
-            counter.textContent = data.count;
-        }
-    } catch (error) {
-        console.error("Error updating counter:", error);
-    }
+    counter.textContent = data; // Update the counter number
 }
 
 updateCounter();
