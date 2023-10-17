@@ -6,7 +6,7 @@
 
 
 ## Overview
-[The Cloud Resume Challenge](https://cloudresumechallenge.dev/) is a multi-step resume project tailored to exhibit and enhance fundamental skills necessary for pursuing a career in cloud computing. This endeavor showcases your competence in constructing a secure static website with a visitor counter, utilizing various AWS services and infrastructure. Successfully accomplishing this challenge equips you with hands-on proficiency in AWS, CloudFront, Lambda, DynamoDB, GitHub Actions, Terraform, and other key technologies.
+[The Cloud Resume Challenge](https://cloudresumechallenge.dev/docs/the-challenge/aws/) is a multi-step resume project tailored to exhibit and enhance fundamental skills necessary for pursuing a career in cloud computing. This endeavor showcases your competence in constructing a secure static website with a visitor counter, utilizing various AWS services and infrastructure. Successfully accomplishing this challenge equips you with hands-on proficiency in AWS, CloudFront, Lambda, DynamoDB, GitHub Actions, Terraform, and other key technologies.
 
 ### Architecture
 
