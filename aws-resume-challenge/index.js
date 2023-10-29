@@ -5,7 +5,7 @@ async function updateCounter() {
     counter.textContent = '0';
 
     let response = await fetch(
-        "https://245zmq3phuc5mk2izugnenqmma0vyqes.lambda-url.us-east-1.on.aws/"
+        "https://4mgwvtn3egg7jdwk7j4d6bvnlq0bqdew.lambda-url.us-east-1.on.aws/"
     );
     let data = await response.json();
 
