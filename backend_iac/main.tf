@@ -8,6 +8,7 @@ resource "aws_lambda_function" "myfunc" {
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
+  count = data.aws_iam_role.existing_role ? 0 : 1
   name = "cloudresume_lambda_role"
 
   assume_role_policy = <<EOF
@@ -28,6 +29,7 @@ EOF
 }
 
 resource "aws_iam_policy" "iam_policy_for_resume_project" {
+  count = data.aws_iam_policy.existing_policy ? 0 : 1
   name        = "aws_iam_policy_for_terraform_resume_project_policy"
   path        = "/"
   description = "AWS IAM Policy for managing the resume project role"
@@ -61,8 +63,9 @@ resource "aws_iam_policy" "iam_policy_for_resume_project" {
 }
 
 resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
-  role       = aws_iam_role.iam_for_lambda.name
-  policy_arn = aws_iam_policy.iam_policy_for_resume_project.arn
+  count = data.aws_iam_role.existing_role && data.aws_iam_policy.existing_policy ? 1 : 0
+  role       = aws_iam_role.iam_for_lambda[0].name
+  policy_arn = aws_iam_policy.iam_policy_for_resume_project[0].arn
 }
 
 data "archive_file" "zip_the_python_code" {
@@ -83,4 +86,12 @@ resource "aws_lambda_function_url" "url1" {
     expose_headers    = ["keep-alive", "date"]
     max_age           = 86400
   }
+}
+
+data "aws_iam_role" "existing_role" {
+  name = "cloudresume_lambda_role"
+}
+
+data "aws_iam_policy" "existing_policy" {
+  name = "aws_iam_policy_for_terraform_resume_project_policy"
 }
