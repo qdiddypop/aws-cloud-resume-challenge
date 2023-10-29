@@ -37,4 +37,4 @@ terraform.rc
 *.tfstate
 *.tfstate.*
 terraform.tfstate.d/
-.terraform/
+
