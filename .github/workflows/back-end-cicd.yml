@@ -21,8 +21,11 @@ jobs:
           aws-region: us-east-1  # Update with your AWS region
 
       - name: Initialize Terraform
-        run: terraform init
-        working-directory: backend_iac  # Change to your IaC directory
+        run: |
+          cd backend_iac  # Change to your IaC directory
+          terraform init
+        working-directory: backend_iac
+        
 
       - name: Run Python Tests
         run: python -m unittest discover -s ./backend_iac/tests -p 'test_func1.py'  # Modify as needed
