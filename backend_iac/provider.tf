@@ -7,7 +7,7 @@ terraform {
   }
 }
 provider "aws" {
-  profile = "simplyq"
+  profile = "howellql"
   region = "us-east-1"
 
 }
