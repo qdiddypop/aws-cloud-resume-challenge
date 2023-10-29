@@ -2,12 +2,12 @@ resource "aws_lambda_function" "myfunc" {
   filename         = data.archive_file.zip_the_python_code.output_path
   source_code_hash = data.archive_file.zip_the_python_code.output_base64sha256
   function_name    = "myfunc"
-  role             = "arn:aws:iam::326768895355:role/cloudresume_lambda_role"
+  role             = aws_iam_role.iam_for_lambda.arn
   handler          = "func.lambda_handler"
   runtime          = "python3.8"
 }
 
-data "aws_iam_role" "existing_role" {
+resource "aws_iam_role" "iam_for_lambda" {
   name = "cloudresume_lambda_role"
 
   assume_role_policy = <<EOF
@@ -27,7 +27,7 @@ data "aws_iam_role" "existing_role" {
 EOF
 }
 
-data "aws_iam_policy" "existing_policy" {
+resource "aws_iam_policy" "iam_policy_for_resume_project" {
   name        = "aws_iam_policy_for_terraform_resume_project_policy"
   path        = "/"
   description = "AWS IAM Policy for managing the resume project role"
@@ -84,3 +84,4 @@ resource "aws_lambda_function_url" "url1" {
     max_age           = 86400
   }
 }
+
