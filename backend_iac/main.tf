@@ -7,7 +7,7 @@ resource "aws_lambda_function" "myfunc" {
   runtime          = "python3.8"
 }
 
-resource "aws_iam_role" "iam_for_lambda" {
+data "aws_iam_role" "existing_role" {
   name = "cloudresume_lambda_role"
 
   assume_role_policy = <<EOF
@@ -27,7 +27,7 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
-resource "aws_iam_policy" "iam_policy_for_resume_project" {
+data "aws_iam_policy" "existing_policy" {
   name        = "aws_iam_policy_for_terraform_resume_project_policy"
   path        = "/"
   description = "AWS IAM Policy for managing the resume project role"
