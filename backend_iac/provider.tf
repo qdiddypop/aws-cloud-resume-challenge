@@ -7,7 +7,7 @@ terraform {
   }
 }
 provider "aws" {
-  profile = "howellql"
+  profile = "@howellql"
   region = "us-east-1"
 
 }
