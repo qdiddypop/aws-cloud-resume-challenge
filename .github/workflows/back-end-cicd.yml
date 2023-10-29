@@ -22,7 +22,6 @@ jobs:
 
       - name: Initialize Terraform
         run: |
-          cd backend_iac  # Change to your IaC directory
           terraform init
         working-directory: backend_iac
         
