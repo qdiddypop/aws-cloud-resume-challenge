@@ -75,10 +75,12 @@ resource "aws_lambda_function" "myfunc" {
   filename         = data.archive_file.zip_the_python_code.output_path
   source_code_hash = data.archive_file.zip_the_python_code.output_base64sha256
   function_name    = "myfunc"
-  role             = aws_iam_role.iam_for_lambda[count.index].arn
   handler          = "func.lambda_handler"
   runtime          = "python3.8"
+  
+  role = aws_iam_role.iam_for_lambda[0].arn  # Specify the role from the first instance
 }
+
 
 data "archive_file" "zip_the_python_code" {
   type        = "zip"
