@@ -89,7 +89,8 @@ data "archive_file" "zip_the_python_code" {
 }
 
 resource "aws_lambda_function_url" "url1" {
-  function_name      = aws_lambda_function.myfunc[count.index].function_name
+  function_name = aws_lambda_function.myfunc[0].function_name != null ? aws_lambda_function.myfunc[0].function_name : aws_lambda_function.myfunc[1].function_name
+
   authorization_type = "NONE"
 
   cors {
@@ -101,3 +102,4 @@ resource "aws_lambda_function_url" "url1" {
     max_age           = 86400
   }
 }
+
