@@ -1,13 +1,29 @@
+data "aws_iam_role" "existing_role" {
+  name = "cloudresume_lambda_role"
+}
+
+data "aws_iam_policy" "existing_policy" {
+  name = "aws_iam_policy_for_terraform_resume_project_policy"
+}
+
+data "aws_lambda_function" "existing_function" {
+  function_name = "myfunc"
+}
+
 resource "aws_lambda_function" "myfunc" {
+  count = data.aws_lambda_function.existing_function ? 0 : 1  # Only create if it doesn't exist
+
   filename         = data.archive_file.zip_the_python_code.output_path
   source_code_hash = data.archive_file.zip_the_python_code.output_base64sha256
   function_name    = "myfunc"
-  role             = aws_iam_role.iam_for_lambda.arn
+  role             = data.aws_iam_role.existing_role.arn
   handler          = "func.lambda_handler"
   runtime          = "python3.8"
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
+  count = data.aws_iam_role.existing_role ? 0 : 1  # Only create if it doesn't exist
+
   name = "cloudresume_lambda_role"
 
   assume_role_policy = <<EOF
@@ -28,6 +44,8 @@ EOF
 }
 
 resource "aws_iam_policy" "iam_policy_for_resume_project" {
+  count = data.aws_iam_policy.existing_policy ? 0 : 1  # Only create if it doesn't exist
+
   name        = "aws_iam_policy_for_terraform_resume_project_policy"
   path        = "/"
   description = "AWS IAM Policy for managing the resume project role"
@@ -61,6 +79,8 @@ resource "aws_iam_policy" "iam_policy_for_resume_project" {
 }
 
 resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
+  count = data.aws_iam_role.existing_role && data.aws_iam_policy.existing_policy ? 1 : 0
+
   role       = aws_iam_role.iam_for_lambda.name
   policy_arn = aws_iam_policy.iam_policy_for_resume_project.arn
 }
@@ -72,6 +92,8 @@ data "archive_file" "zip_the_python_code" {
 }
 
 resource "aws_lambda_function_url" "url1" {
+  count = data.aws_lambda_function.existing_function ? 0 : 1  # Only create if it doesn't exist
+
   function_name      = aws_lambda_function.myfunc.function_name
   authorization_type = "NONE"
 
@@ -84,4 +106,3 @@ resource "aws_lambda_function_url" "url1" {
     max_age           = 86400
   }
 }
-
