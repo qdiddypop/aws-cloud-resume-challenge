@@ -9,7 +9,7 @@ data "aws_iam_policy" "existing_policy" {
 
 # Conditionally create the IAM role and policy if they don't exist
 resource "aws_iam_role" "iam_for_lambda" {
-  count = data.aws_iam_role.existing_role ? 0 : 1  # Conditionally create if it doesn't exist
+  count = length(data.aws_iam_role.existing_role) == 0 ? 1 : 0  # Conditionally create if it doesn't exist
   name = "cloudresume_lambda_role"
 
   assume_role_policy = <<EOF
@@ -29,8 +29,10 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
+
+
 resource "aws_iam_policy" "iam_policy_for_resume_project" {
-  count = data.aws_iam_policy.existing_policy ? 0 : 1  # Conditionally create if it doesn't exist
+  count = data.aws_iam_policy.existing_policy != null ? 0 : 1  # Conditionally create if it doesn't exist
   name        = "aws_iam_policy_for_terraform_resume_project_policy"
   path        = "/"
   description = "AWS IAM Policy for managing the resume project role"
@@ -65,32 +67,36 @@ resource "aws_iam_policy" "iam_policy_for_resume_project" {
 
 # Define the IAM role policy attachment
 resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
-  count = data.aws_iam_role.existing_role ? 0 : 1  # Conditionally create attachment if the role doesn't exist
-  role       = aws_iam_role.iam_for_lambda[count.index].name
-  policy_arn = aws_iam_policy.iam_policy_for_resume_project[count.index].arn
-}
-
-# The rest of your configuration remains the same
-resource "aws_lambda_function" "myfunc" {
-  filename         = data.archive_file.zip_the_python_code.output_path
-  source_code_hash = data.archive_file.zip_the_python_code.output_base64sha256
-  function_name    = "myfunc"
-  handler          = "func.lambda_handler"
-  runtime          = "python3.8"
-  
-  role = aws_iam_role.iam_for_lambda[0].arn  # Specify the role from the first instance
+  count = length(data.aws_iam_role.existing_role) == 0 ? 1 : 0  # Conditionally create attachment if the role doesn't exist
+  role       = aws_iam_role.iam_for_lambda[0].name
+  policy_arn = aws_iam_policy.iam_policy_for_resume_project[0].arn
 }
 
 
+
+# Archive the Python code
 data "archive_file" "zip_the_python_code" {
   type        = "zip"
   source_file = "${path.module}/lambda/func.py"
   output_path = "${path.module}/lambda/func.zip"
 }
 
-resource "aws_lambda_function_url" "url1" {
-  function_name = aws_lambda_function.myfunc[0].function_name != null ? aws_lambda_function.myfunc[0].function_name : aws_lambda_function.myfunc[1].function_name
+# Define the Lambda function
+resource "aws_lambda_function" "myfunc" {
+  count            = length(aws_iam_role.iam_for_lambda) > 0 ? 1 : 0
+  filename         = data.archive_file.zip_the_python_code.output_path
+  source_code_hash = data.archive_file.zip_the_python_code.output_base64sha256
+  function_name    = "myfunc"
+  handler          = "func.lambda_handler"
+  runtime          = "python3.8"
+  role             = aws_iam_role.iam_for_lambda[0].arn
+}
 
+
+# Define the Lambda function URL
+resource "aws_lambda_function_url" "url1" {
+  count             = length(aws_lambda_function.myfunc) > 0 ? 1 : 0
+  function_name      = aws_lambda_function.myfunc[count.index].function_name
   authorization_type = "NONE"
 
   cors {
