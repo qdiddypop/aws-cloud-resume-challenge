@@ -2222,6 +2222,25 @@ input, select, textarea {
 				border-radius: 0;
 			}
 
+/* Define a CSS class for spinning */
+.spin-coin {
+    animation: spin 5s linear infinite;
+    transform-style: preserve-3d; /* Preserve 3D space for mirroring */
+    backface-visibility: visible; /* Show back face */
+}
+
+/* Define the spinning animation */
+@keyframes spin {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+
+			
 /* List */
 
 	ol {
