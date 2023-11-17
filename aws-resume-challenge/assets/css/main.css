@@ -1757,6 +1757,7 @@ input, select, textarea {
 
 		}
 
+		
 /* Section/Article */
 
 	section.special, article.special {
@@ -2733,7 +2734,7 @@ input, select, textarea {
 		-webkit-justify-content: space-between;
 		-ms-justify-content: space-between;
 		justify-content: space-between;
-		background: #4acaa8;
+		background: linear-gradient(to top, #003366, #add8e6);
 		color: #d2f2e9;
 		height: 100%;
 		overflow-y: auto;
